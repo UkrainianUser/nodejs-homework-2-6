@@ -2,7 +2,7 @@ const contacts = require("../models/contacts");
 
 const { HttpError } = require("../helpers");
 
-const addSchema = require("../schemas");
+const addSchema = require("../schemas/joi");
 
 const getAllContacts = async (req, res, next) => {
 	try {
