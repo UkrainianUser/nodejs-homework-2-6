@@ -1,12 +1,4 @@
-const mongoose = require("mongoose");
 const contacts = require("../models/contacts");
-
-mongoose.Promise = global.Promise;
-mongoose.connect(process.env.DB_HOST, {
-	useNewUrlParser: true,
-	useCreateIndex: true,
-	useUnifiedTopology: true,
-});
 
 const { HttpError } = require("../helpers");
 
