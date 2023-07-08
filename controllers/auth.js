@@ -1,6 +1,6 @@
 const { User } = require("../models");
 
-const { HttpError, ctrlWrapper } = require("../helpers");
+const ctrlWrapper = require("../middlewares/ctrlWrapper");
 
 const register = async (req, res) => {
 	const newUser = await User.create(req.body);
