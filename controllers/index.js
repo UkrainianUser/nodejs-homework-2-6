@@ -4,7 +4,7 @@ const addContact = require("./addContact");
 const deleteContact = require("./deleteContact");
 const changeContact = require("./changeContact");
 const updateStatusContact = require("./updateStatusContact");
-const { register } = require("./auth");
+const { register, login } = require("./auth");
 
 module.exports = {
 	getAllContacts,
@@ -14,4 +14,5 @@ module.exports = {
 	changeContact,
 	updateStatusContact,
 	register,
+	login,
 };
