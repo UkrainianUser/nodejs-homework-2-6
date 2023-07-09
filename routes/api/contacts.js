@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const controllers = require("../../controllers");
-const authenticate = require("../../middlewares");
+const { authenticate } = require("../../middlewares");
 
 router.get("/", authenticate, controllers.getAllContacts);
 
