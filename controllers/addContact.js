@@ -7,7 +7,7 @@ const addContact = async (req, res, next) => {
 		const { error } = addSchema.validate(req.body);
 		console.log(error);
 		if (error) {
-			throw HttpError(400, "missing required name field");
+			throw new HttpError(400, "missing required name field");
 		}
 		const { _id: owner } = req.user;
 		const result = await Contact.create({ ...req.body, owner });
