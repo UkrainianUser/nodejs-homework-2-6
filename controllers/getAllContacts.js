@@ -6,7 +6,7 @@ const getAllContacts = async (req, res, next) => {
 		const result = await Contact.find(
 			{ owner },
 			"-createAt -updateAt"
-		).populate("owner", "subscription email");
+		).populate("owner", "_id email subscription");
 		res.json(result);
 	} catch (error) {
 		next(error);
