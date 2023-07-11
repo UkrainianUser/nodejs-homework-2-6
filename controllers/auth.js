@@ -43,11 +43,22 @@ const login = async (req, res) => {
 	};
 
 	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
+	await User.findByIdAndUpdate(user, _id, { token });
 
 	res.json({ token });
+};
+
+const logout = async (req, res) => {
+	const { _id } = req.user;
+	await User.findByIdAndUpdate({ token: "" });
+
+	res.json({
+		message: "Logout success!",
+	});
 };
 
 module.exports = {
 	register: ctrlWrapper(register),
 	login: ctrlWrapper(login),
+	logout: ctrlWrapper(logout),
 };
