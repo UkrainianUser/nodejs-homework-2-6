@@ -36,6 +36,7 @@ const registerSchema = Joi.object({
 	email: Joi.string().pattern(emailRegExp).required(),
 	password: Joi.string().required(),
 	subscription: Joi.string().valid("starter", "pro", "business").optional(),
+	avatarURL: Joi.string(),
 });
 
 const loginSchema = Joi.object({
