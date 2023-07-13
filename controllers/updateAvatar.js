@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs/promises");
 const { User } = require("../models");
 
-const avatarsDir = path.json(__dirname, "../", "public", "avatars");
+const avatarsDir = path.join(__dirname, "../", "public", "avatars");
 
 const updateAvatar = async (req, res) => {
 	const { _id } = req.user;
