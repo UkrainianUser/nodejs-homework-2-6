@@ -6,6 +6,7 @@ const {
 	ctrlWrapper,
 	validateBody,
 	authenticate,
+	upload,
 } = require("../../middlewares");
 
 const router = express.Router();
@@ -25,5 +26,12 @@ router.post(
 router.post("/logout", authenticate, ctrlWrapper(ctrl.logout));
 
 router.get("/current", authenticate, ctrlWrapper(ctrl.getCurrent));
+
+router.patch(
+	"/avatar",
+	authenticate,
+	upload.single("avatar"),
+	ctrlWrapper(ctrl.updateAvatar)
+);
 
 module.exports = router;
