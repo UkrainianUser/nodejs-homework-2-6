@@ -2,11 +2,12 @@ const { User } = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const { nanoid } = require("nanoid");
 
 const { ctrlWrapper } = require("../middlewares");
-const { HttpError } = require("../helpers");
+const { HttpError, sendEmail } = require("../helpers");
 
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY, BASE_URL } = process.env;
 
 const register = async (req, res) => {
 	const { email, password } = req.body;
@@ -17,8 +18,21 @@ const register = async (req, res) => {
 	}
 
 	const hashPassword = await bcrypt.hash(password, 10);
+	const verificationCode = nanoid();
 
-	const newUser = await User.create({ ...req.body, password: hashPassword });
+	const newUser = await User.create({
+		...req.body,
+		password: hashPassword,
+		verificationCode,
+	});
+
+	const verifyEmail = {
+		to: email,
+		subject: "Verify email",
+		html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationCode}">Click verify email</a>`,
+	};
+
+	await sendEmail(verifyEmail);
 
 	res.status(201).json({
 		email: newUser.email,
