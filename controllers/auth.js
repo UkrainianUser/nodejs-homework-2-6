@@ -29,13 +29,14 @@ const register = async (req, res) => {
 	const verifyEmail = {
 		to: email,
 		subject: "Verify email",
-		html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationCode}">Click to verify your email</a>`,
+		html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationCode}">Click verify email</a>`,
 	};
 
 	await sendEmail(verifyEmail);
 
 	res.status(201).json({
 		email: newUser.email,
+		password: newUser.password,
 	});
 };
 
