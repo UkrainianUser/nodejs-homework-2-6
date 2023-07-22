@@ -18,18 +18,18 @@ const register = async (req, res) => {
 	}
 
 	const hashPassword = await bcrypt.hash(password, 10);
-	const verificationCode = nanoid();
+	const verificationToken = nanoid();
 
 	const newUser = await User.create({
 		...req.body,
 		password: hashPassword,
-		verificationCode,
+		verificationToken,
 	});
 
 	const verifyEmail = {
 		to: email,
 		subject: "Verify email",
-		html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationCode}">Click verify email</a>`,
+		html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationToken}">Click verify email</a>`,
 	};
 
 	await sendEmail(verifyEmail);
