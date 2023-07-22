@@ -6,6 +6,7 @@ const changeContact = require("./changeContact");
 const updateStatusContact = require("./updateStatusContact");
 const { register, login, logout } = require("./auth");
 const getCurrent = require("./getCurrent");
+const verifyEmail = require("./verifyEmail");
 
 module.exports = {
 	getAllContacts,
@@ -18,4 +19,5 @@ module.exports = {
 	login,
 	getCurrent,
 	logout,
+	verifyEmail,
 };
