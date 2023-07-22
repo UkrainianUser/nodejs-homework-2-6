@@ -24,7 +24,7 @@ const sendEmail = async (toEmail) => {
 	};
 
 	await transport
-		.sendmail(email)
+		.sendMail(email)
 		.then(() => console.log("Email send success"))
 		.catch((error) => console.log(error.message));
 };
