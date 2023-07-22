@@ -13,7 +13,7 @@ const nodemailerConfig = {
 	},
 };
 
-const transport = nodemailer.createTransport(nodemailerConfig);
+const transporter = nodemailer.createTransport(nodemailerConfig);
 
 const sendEmail = async (toEmail) => {
 	const email = {
@@ -23,7 +23,7 @@ const sendEmail = async (toEmail) => {
 		html: "<h1>Test email</h1>",
 	};
 
-	await transport
+	await transporter
 		.sendMail(email)
 		.then(() => console.log("Email send success"))
 		.catch((error) => console.log(error.message));
