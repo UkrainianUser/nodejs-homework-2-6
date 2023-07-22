@@ -1,4 +1,5 @@
 require("dotenv").config();
+const nodemailer = require("nodemailer");
 
 const { META_PASSWORD } = process.env;
 
