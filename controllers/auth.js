@@ -13,6 +13,18 @@ const register = async (req, res) => {
 	const { email, password } = req.body;
 	const user = await User.findOne({ email });
 
+	const verifyEmail = {
+		to: email,
+		subject: "Verify email",
+		html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${verificationToken}">Click verify email</a>`,
+	};
+
+	await sendEmail(verifyEmail);
+
+	res.status(201).json({
+		email: newUser.email,
+	});
+
 	if (user) {
 		throw HttpError(409, "Email in use");
 	}
@@ -24,18 +36,6 @@ const register = async (req, res) => {
 		...req.body,
 		password: hashPassword,
 		verificationToken,
-	});
-
-	const verifyEmail = {
-		to: email,
-		subject: "Verify email",
-		html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${verificationToken}">Click verify email</a>`,
-	};
-
-	await sendEmail(verifyEmail);
-
-	res.status(201).json({
-		email: newUser.email,
 	});
 };
 
