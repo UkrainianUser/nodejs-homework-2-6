@@ -33,6 +33,7 @@ router.post(
 	"/verify",
 	validateBody(schemas.emailSchema),
 	ctrlWrapper(ctrl.resendVerifyEmail)
+);
 
 router.patch(
 	"/avatars",
