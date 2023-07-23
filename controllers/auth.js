@@ -13,7 +13,7 @@ const register = async (req, res) => {
 	const { email, password } = req.body;
 	const user = await User.findOne({ email });
 
-	if (user) {
+	if (!user) {
 		throw HttpError(409, "Email in use");
 	}
 
@@ -29,7 +29,7 @@ const register = async (req, res) => {
 	const verifyEmail = {
 		to: email,
 		subject: "Verify email",
-		html: `<a target="_blank" href="${BASE_URL}/api/verify/${verificationToken}">Click verify email</a>`,
+		html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${verificationToken}">Click verify email</a>`,
 	};
 
 	await sendEmail(verifyEmail);
