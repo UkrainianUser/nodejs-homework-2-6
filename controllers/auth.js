@@ -29,7 +29,7 @@ const register = async (req, res) => {
 	const verifyEmail = {
 		to: email,
 		subject: "Verify email",
-		html: `<a target="_blank" href="${BASE_URL}/api/auth/verify/${verificationToken}">Click verify email</a>`,
+		html: `<a target="_blank" href="${BASE_URL}/api/users/verify/:${verificationToken}">Click verify email</a>`,
 	};
 
 	await sendEmail(verifyEmail);
@@ -45,6 +45,10 @@ const login = async (req, res) => {
 	const user = await User.findOne({ email });
 	if (!user) {
 		throw HttpError(401, "Email or password is wrong");
+	}
+
+	if (!user.verify) {
+		throw HttpError(401, "Email not verified");
 	}
 
 	const passwordCompare = await bcrypt.compare(password, user.password);
