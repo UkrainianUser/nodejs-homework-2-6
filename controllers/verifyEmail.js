@@ -12,7 +12,7 @@ const verifyEmail = async (req, res) => {
 		verificationToken: null,
 	});
 
-	res.json({ message: "Verification successful" });
+	res.status(200).json({ message: "Verification successful" });
 };
 
 module.exports = verifyEmail;
