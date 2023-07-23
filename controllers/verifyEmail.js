@@ -4,6 +4,7 @@ const { HttpError } = require("../helpers");
 const verifyEmail = async (req, res) => {
 	const { verificationToken } = req.params;
 	const user = await User.findOne({ verificationToken });
+	res.json(user);
 	if (!user) {
 		throw HttpError(404, "User not found");
 	}
@@ -12,7 +13,7 @@ const verifyEmail = async (req, res) => {
 		verificationToken: null,
 	});
 
-	res.json({ message: "Verification successful" });
+	// res.json({ message: "Verification successful" });
 };
 
 module.exports = verifyEmail;
