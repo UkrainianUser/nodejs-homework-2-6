@@ -27,12 +27,13 @@ router.post("/logout", authenticate, ctrlWrapper(ctrl.logout));
 
 router.get("/current", authenticate, ctrlWrapper(ctrl.getCurrent));
 
-router.get("/verify/:verificationToken"), ctrlWrapper(ctrl.verifyEmail);
+router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
 
 router.post(
 	"/verify",
 	validateBody(schemas.emailSchema),
 	ctrlWrapper(ctrl.resendVerifyEmail)
+);
 
 router.patch(
 	"/avatars",
