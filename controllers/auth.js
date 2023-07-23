@@ -3,11 +3,12 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
 require("dotenv").config();
+const { nanoid } = require("nanoid");
 
 const { ctrlWrapper } = require("../middlewares");
-const { HttpError } = require("../helpers");
+const { HttpError, sendEmail } = require("../helpers");
 
-const { SECRET_KEY } = process.env;
+const { SECRET_KEY, BASE_URL } = process.env;
 
 const register = async (req, res) => {
 	const { email, password } = req.body;
@@ -18,17 +19,28 @@ const register = async (req, res) => {
 	}
 
 	const hashPassword = await bcrypt.hash(password, 10);
+	const verificationToken = nanoid();
 	const avatarURL = gravatar.url(email);
+
 
 	const newUser = await User.create({
 		...req.body,
 		password: hashPassword,
-		avatarURL,
+    avatarURL,
+		verificationToken,
+	});
+
+	const verifyEmail = {
+		to: email,
+		subject: "Verify email",
+		html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${verificationToken}">Click verify email</a>`,
+	};
+
+	await sendEmail(verifyEmail);		
 	});
 
 	res.status(201).json({
 		email: newUser.email,
-		password: newUser.password,
 	});
 };
 
@@ -37,6 +49,10 @@ const login = async (req, res) => {
 	const user = await User.findOne({ email });
 	if (!user) {
 		throw HttpError(401, "Email or password is wrong");
+	}
+
+	if (!user.verify) {
+		throw HttpError(401, "Email not verified");
 	}
 
 	const passwordCompare = await bcrypt.compare(password, user.password);
