@@ -7,6 +7,7 @@ const updateStatusContact = require("./updateStatusContact");
 const { register, login, logout } = require("./auth");
 const getCurrent = require("./getCurrent");
 const verifyEmail = require("./verifyEmail");
+const resendVerifyEmail = require("./resendVerifyEmail");
 
 module.exports = {
 	getAllContacts,
@@ -20,4 +21,5 @@ module.exports = {
 	getCurrent,
 	logout,
 	verifyEmail,
+	resendVerifyEmail,
 };
