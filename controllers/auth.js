@@ -14,13 +14,13 @@ const register = async (req, res) => {
 	const { email, password } = req.body;
 	const user = await User.findOne({ email });
 
-	if (user) {
-		throw HttpError(409, "Email in use");
-	}
-
 	const hashPassword = await bcrypt.hash(password, 10);
 	const verificationToken = nanoid();
 	const avatarURL = gravatar.url(email);
+
+	if (user) {
+		throw HttpError(409, "Email in use");
+	}
 
 	const newUser = await User.create({
 		...req.body,

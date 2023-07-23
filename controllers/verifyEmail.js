@@ -4,11 +4,11 @@ const { HttpError } = require("../helpers");
 const verifyEmail = async (req, res) => {
 	const { verificationToken } = req.params;
 	const user = await User.findOne({ verificationToken });
-	const { _id } = req.user;
+
 	if (!user) {
 		throw HttpError(404, "User not found");
 	}
-	await User.findByIdAndUpdate(_id, {
+	await User.findByIdAndUpdate(user._id, {
 		verify: true,
 		verificationToken: null,
 	});
