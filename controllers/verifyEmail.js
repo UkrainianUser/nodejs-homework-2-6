@@ -3,6 +3,7 @@ const { HttpError } = require("../helpers");
 
 const verifyEmail = async (req, res) => {
 	const { verificationToken } = req.params;
+	console.log(req.params);
 	const user = await User.findOne({ verificationToken });
 	if (!user) {
 		throw HttpError(404, "User not found");
